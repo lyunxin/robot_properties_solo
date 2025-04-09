@@ -23,6 +23,7 @@ class Solo12Robot():
 
         # Create the robot wrapper in pinocchio.
         self.pin_robot = Solo12Config.buildRobotWrapper()
+        self.initial_configuration = Solo12Config.initial_configuration
 
         self.base_link_name = "base_link"
         self.end_eff_ids = []
@@ -50,7 +51,7 @@ class Solo12Robot():
         elif dq is None:
             raise ValueError("Need to provide q and dq or non of them.")
 
-        self.pin_robot.forwardKinematics(q, dq)
+        self.pin_robot.forwardKinematics(q, dq, 0*dq)
         self.pin_robot.computeJointJacobians(q)
         self.pin_robot.framesForwardKinematics(q)
         self.pin_robot.centroidalMomentum(q, dq)
