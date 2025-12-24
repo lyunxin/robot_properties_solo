@@ -1,0 +1,121 @@
+# Q8bot Five-bar Linkage Robot Configuration
+# Virtual serial chain (8 DOF) mapped to real five-bar mechanism (8 motors)
+robot:
+    interface: eno1
+    joint_modules:
+        motor_numbers:
+            [
+                0, # leg1_hip (motor 11)
+                1, # leg1_knee (motor 14)
+                2, # leg2_hip (motor 21)
+                3, # leg2_knee (motor 24)
+                4, # leg3_hip (motor 31)
+                5, # leg3_knee (motor 34)
+                6, # leg4_hip (motor 41)
+                7  # leg4_knee (motor 44)
+            ]
+        motor_constants: 0.146
+        gear_ratios: 77.5  # Direct drive or low ratio for five-bar
+        counts_per_revolution: 4096
+        max_currents: 2.0
+        reverse_polarities:
+            [
+                false, # leg1_hip
+                false, # leg1_knee
+                false, # leg2_hip
+                false, # leg2_knee
+                false, # leg3_hip
+                false, # leg3_knee
+                false, # leg4_hip
+                false  # leg4_knee
+            ]
+        lower_joint_limits:
+            [
+                -1.57, # leg1_hip
+                -3.14, # leg1_knee
+                -1.57, # leg2_hip
+                -3.14, # leg2_knee
+                -1.57, # leg3_hip
+                -3.14, # leg3_knee
+                -1.57, # leg4_hip
+                -3.14  # leg4_knee
+            ]
+        upper_joint_limits:
+            [
+                1.57, # leg1_hip
+                3.14, # leg1_knee
+                1.57, # leg2_hip
+                3.14, # leg2_knee
+                1.57, # leg3_hip
+                3.14, # leg3_knee
+                1.57, # leg4_hip
+                3.14  # leg4_knee
+            ]
+        max_joint_velocities: 20.0
+        safety_damping: 0.05
+        joint_names: [ "leg1_hip_joint", "leg1_knee_joint", "leg2_hip_joint", "leg2_knee_joint", "leg3_hip_joint", "leg3_knee_joint", "leg4_hip_joint", "leg4_knee_joint" ]
+    imu:
+        rotate_vector: [ -1, -2, 3 ]
+        orientation_vector: [ -3, -4, -1, -2 ]
+
+joint_calibrator:
+    # Can be either POS, NEG, ALT or AUTO
+    search_methods:
+        [
+            POS, # leg1_hip
+            POS, # leg1_knee
+            POS, # leg2_hip
+            POS, # leg2_knee
+            POS, # leg3_hip
+            POS, # leg3_knee
+            POS, # leg4_hip
+            POS  # leg4_knee
+        ]
+    position_offsets: [
+        0.0,   # leg1_hip
+        0.0,   # leg1_knee
+        0.0,   # leg2_hip
+        0.0,   # leg2_knee
+        0.0,   # leg3_hip
+        0.0,   # leg3_knee
+        0.0,   # leg4_hip
+        0.0    # leg4_knee
+    ]
+    calib_order:
+        [
+            0, # leg1_hip
+            1, # leg1_knee
+            0, # leg2_hip
+            1, # leg2_knee
+            0, # leg3_hip
+            1, # leg3_knee
+            0, # leg4_hip
+            1  # leg4_knee
+        ]
+    calib_pos:
+        [
+            0.0,  # leg1_hip
+            0.0,  # leg1_knee
+            0.0,  # leg2_hip
+            0.0,  # leg2_knee
+            0.0,  # leg3_hip
+            0.0,  # leg3_knee
+            0.0,  # leg4_hip
+            0.0   # leg4_knee
+        ]
+    Kp: 5
+    Kd: 0.01
+    T: 2
+    dt: 0.001
+
+simulation:
+    simulate_encoders: true
+#    initial_pose: [0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5]
+    initial_pose: [0, 0, 0, 0, 0, 0, 0, 0]
+
+mujoco:
+    use_gui: true
+    start_paused: false
+    fixed: false
+    environment: ""
+    environments_package: ""
