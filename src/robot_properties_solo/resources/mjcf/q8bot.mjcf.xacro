@@ -1,0 +1,234 @@
+<mujoco model="q8bot_scene">
+  <compiler angle="radian" meshdir="/home/wz/ROS2/solo_q8bot_ws/src/robot_properties_solo/src/robot_properties_solo/resources/meshes/q8bot/" balanceinertia="true" autolimits="true"/>
+
+  <option timestep="0.002" gravity="0 0 -9.81" iterations="50" tolerance="1e-4"/>
+
+  <visual>
+    <headlight ambient="0.4 0.4 0.4" diffuse="0.8 0.8 0.8" specular="0.1 0.1 0.1"/>
+    <global offwidth="1920" offheight="1080"/>
+  </visual>
+
+  <default>
+    <default class="visual">
+      <geom type="mesh" contype="0" conaffinity="0" group="2" density="0" rgba="0.5 0.5 0.5 1"/>
+    </default>
+
+    <default class="collision">
+      <geom contype="1" conaffinity="1" friction="1.0 0.005 0.0001" solref="0.02 1"/>
+    </default>
+
+    <joint damping="0.5" armature="0.01" frictionloss="0.1"/>
+  </default>
+
+  <asset>
+    <mesh name="base_link" file="base_link.STL"/>
+    <mesh name="11_Link" file="11_Link.STL"/>
+    <mesh name="12_Link" file="12_Link.STL"/>
+    <mesh name="14_Link" file="14_Link.STL"/>
+    <mesh name="13_Link" file="13_Link.STL"/>
+    <mesh name="21_Link" file="21_Link.STL"/>
+    <mesh name="22_Link" file="22_Link.STL"/>
+    <mesh name="24_Link" file="24_Link.STL"/>
+    <mesh name="23_Link" file="23_Link.STL"/>
+    <mesh name="31_Link" file="31_Link.STL"/>
+    <mesh name="32_Link" file="32_Link.STL"/>
+    <mesh name="34_Link" file="34_Link.STL"/>
+    <mesh name="33_Link" file="33_Link.STL"/>
+    <mesh name="41_Link" file="41_Link.STL"/>
+    <mesh name="42_Link" file="42_Link.STL"/>
+    <mesh name="44_Link" file="44_Link.STL"/>
+    <mesh name="43_Link" file="43_Link.STL"/>
+
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072"/>
+    <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3" markrgb="0.8 0.8 0.8" width="300" height="300"/>
+    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/>
+  </asset>
+
+  <worldbody>
+    <light pos="0 0 1.5" dir="0 0 -1" diffuse="0.8 0.8 0.8" specular="0.3 0.3 0.3"/>
+    <light pos="0 -1 1" dir="0 1 -0.5" diffuse="0.4 0.4 0.4" specular="0.1 0.1 0.1"/>
+
+    <!-- 地面 -->
+    <geom name="floor" type="plane" size="5 5 0.1" material="groundplane"
+          contype="1" conaffinity="1" friction="1.0 0.005 0.0001" condim="6"/>
+
+    <!-- Q8bot机器人 -->
+    <body name="q8bot_root" pos="0 0 0.15">
+      <freejoint name="root"/>
+      <geom type="mesh" rgba="0.79 0.82 0.93 1" mesh="base_link" contype="1" conaffinity="1" mass="0.20622"/>
+      <site name="imu_site" pos="0 0 0" size="0.01" rgba="1 0 0 1"/>
+      <body name="11_Link" pos="-0.049424 -0.037009 -0.0053185" quat="-0.287136 0.32386 -0.664177 -0.609538">
+        <inertial pos="0.00562558 0 0.00348657" quat="0 0.747081 0 0.664733" mass="0.0018" diaginertia="1.69562e-07 1.48841e-07 3.74373e-08"/>
+        <joint name="11_joint" axis="0 0 -1" range="-1.57 1.57"/>
+        <geom class="visual" mesh="11_Link" rgba="0.498 0.498 0.498 1"/>
+
+        <body name="12_Link" pos="0.025 0 0" quat="0.769748 0 0 -0.638348">
+          <inertial pos="0.017264 0.00128943 0.00650041" quat="-0.017512 0.706242 0.0190334 0.707498" mass="0.0011" diaginertia="2.21906e-07 2.13130e-07 1.17027e-08"/>
+          <joint name="12_joint" axis="0 0 -1" range="-1.57 1.57" damping="0.01"/>
+          <geom class="visual" mesh="12_Link" rgba="0.498 0.498 0.498 1"/>
+          <site name="tip_12" pos="0.04 0 0" size="0.002" rgba="1 0 0 0"/>
+          <geom name="foot_1" class="collision" type="sphere" size="0.008" pos="0.04 0 0" rgba="0 0 0 0"/>
+        </body>
+      </body>
+
+      <body name="14_Link" pos="-0.029987 -0.032246 -0.0055001" quat="0.579419 -0.695139 0.359845 0.227085">
+        <inertial pos="0.0088686 0 0.00363643" quat="0 0.642401 0 0.766368" mass="0.0018" diaginertia="2.00026e-07 1.76485e-07 2.83223e-08"/>
+        <joint name="14_joint" axis="0.177151 0 -0.984184" range="-1.57 1.57"/>
+        <geom class="visual" mesh="14_Link" rgba="0.498 0.498 0.498 1"/>
+
+        <body name="13_Link" pos="0.025402 0 0" quat="0.766691 -0.0567659 -0.0684537 0.635827">
+          <inertial pos="0.022736 0.00128943 0.00199959" quat="0.017512 0.706242 -0.0190334 0.707498" mass="0.0011" diaginertia="2.21906e-07 2.13130e-07 1.17027e-08"/>
+          <joint name="13_joint" axis="0 0 -1" range="-1.57 1.57" damping="0.01"/>
+          <geom class="visual" mesh="13_Link" rgba="0.498 0.498 0.498 1"/>
+          <site name="tip_13" pos="0.04 0 0" size="0.002" rgba="0 1 0 0"/>
+        </body>
+      </body>
+
+      <!-- 腿2 (前右) -->
+      <body name="21_Link" pos="0.031062 -0.035843 -0.0043579" quat="-0.287136 0.32386 -0.664177 -0.609538">
+      <inertial pos="0.00562558 0 0.00348657" quat="0 0.747081 0 0.664733" mass="0.0018" diaginertia="1.69562e-07 1.48841e-07 3.74373e-08"/>
+      <joint name="21_joint" axis="0 0 -1" range="-1.57 1.57"/>
+      <geom class="visual" mesh="21_Link" rgba="0.498 0.498 0.498 1"/>
+      <body name="22_Link" pos="0.025 0 0" quat="0.769748 0 0 -0.638348">
+        <inertial pos="0.017264 0.00128943 0.00650041" quat="-0.017512 0.706242 0.0190334 0.707498" mass="0.0011" diaginertia="2.21906e-07 2.13130e-07 1.17027e-08"/>
+        <joint name="22_joint" axis="0 0 -1" range="-1.57 1.57" damping="0.01"/>
+        <geom class="visual" mesh="22_Link" rgba="0.498 0.498 0.498 1"/>
+        <site name="tip_22" pos="0.04 0 0" size="0.002" rgba="1 0 0 0"/>
+        <geom name="foot_2" class="collision" type="sphere" size="0.008" pos="0.04 0 0" rgba="0 0 0 0"/>
+      </body>
+    </body>
+    <body name="24_Link" pos="0.050499 -0.03108 -0.0045395" quat="0.579419 -0.695139 0.359845 0.227085">
+      <inertial pos="0.0088686 0 0.00363643" quat="0 0.642401 0 0.766368" mass="0.0018" diaginertia="2.00026e-07 1.76485e-07 2.83223e-08"/>
+      <joint name="24_joint" axis="0.177151 0 -0.984184" range="-1.57 1.57"/>
+      <geom class="visual" mesh="24_Link" rgba="0.498 0.498 0.498 1"/>
+      <body name="23_Link" pos="0.025402 0 0" quat="0.766691 -0.0567659 -0.0684537 0.635827">
+        <inertial pos="0.022736 0.00128943 0.00199959" quat="0.017512 0.706242 -0.0190334 0.707498" mass="0.0011" diaginertia="2.21906e-07 2.13130e-07 1.17027e-08"/>
+        <joint name="23_joint" axis="0 0 1" range="-1.57 1.57" damping="0.01"/>
+        <geom class="visual" mesh="23_Link" rgba="0.498 0.498 0.498 1"/>
+        <site name="tip_23" pos="0.04 0 0" size="0.002" rgba="0 1 0 0"/>
+      </body>
+    </body>
+
+    <body name="31_Link" pos="0.049628 0.033937 -0.010551" quat="0.672196 0.609117 0.288006 -0.30689">
+      <inertial pos="0.00562558 0 0.00348657" quat="0 0.747081 0 0.664733" mass="0.0018" diaginertia="1.69562e-07 1.48841e-07 3.74373e-08"/>
+      <joint name="31_joint" axis="0 0 -1" range="-1.57 1.57"/>
+      <geom class="visual" mesh="31_Link" rgba="0.498 0.498 0.498 1"/>
+      <body name="32_Link" pos="0.025 0 0" quat="0.769748 0 0 -0.638348">
+        <inertial pos="0.017264 0.00128943 0.00650041" quat="-0.017512 0.706242 0.0190334 0.707498" mass="0.0011" diaginertia="2.21906e-07 2.13130e-07 1.17027e-08"/>
+        <joint name="32_joint" axis="0 0 -1" range="-1.57 1.57" damping="0.01"/>
+        <geom class="visual" mesh="32_Link" rgba="0.498 0.498 0.498 1"/>
+        <site name="tip_32" pos="0.04 0 0" size="0.002" rgba="1 0 0 0"/>
+        <geom name="foot_3" class="collision" type="sphere" size="0.008" pos="0.04 0 0" rgba="0 0 0 0"/>
+      </body>
+    </body>
+    <body name="34_Link" pos="0.030192 0.029174 -0.010369" quat="-0.268347 -0.345091 -0.635906 0.636023">
+      <inertial pos="0.0088686 0 0.00363643" quat="0 0.642401 0 0.766368" mass="0.0018" diaginertia="2.00026e-07 1.76485e-07 2.83223e-08"/>
+      <joint name="34_joint" axis="0.177151 0 -0.984184" range="-1.57 1.57"/>
+      <geom class="visual" mesh="34_Link" rgba="0.498 0.498 0.498 1"/>
+      <body name="33_Link" pos="0.025402 0 0" quat="0.766691 -0.0567659 -0.0684537 0.635827">
+        <inertial pos="0.022736 0.00128943 0.00199959" quat="0.017512 0.706242 -0.0190334 0.707498" mass="0.0011" diaginertia="2.21906e-07 2.13130e-07 1.17027e-08"/>
+        <joint name="33_joint" axis="0 0 1" range="-1.57 1.57" damping="0.01"/>
+        <geom class="visual" mesh="33_Link" rgba="0.498 0.498 0.498 1"/>
+        <site name="tip_33" pos="0.04 0 0" size="0.002" rgba="0 1 0 0"/>
+      </body>
+    </body>
+
+      <!-- 腿4 (后左) -->
+    <body name="41_Link" pos="-0.030857 0.032771 -0.011511" quat="0.672196 0.609117 0.288006 -0.30689">
+        <inertial pos="0.00562558 0 0.00348657" quat="0 0.747081 0 0.664733" mass="0.0018" diaginertia="1.69562e-07 1.48841e-07 3.74373e-08"/>
+        <joint name="41_joint" axis="0 0 -1" range="-1.57 1.57"/>
+        <geom class="visual" mesh="41_Link" rgba="0.498 0.498 0.498 1"/>
+        <body name="42_Link" pos="0.025 0 0" quat="0.76975 0 0 -0.638345">
+          <inertial pos="0.017264 0.00128943 0.00650041" quat="-0.017512 0.706242 0.0190334 0.707498" mass="0.0011" diaginertia="2.21906e-07 2.13130e-07 1.17027e-08"/>
+          <joint name="42_joint" axis="0 0 -1" range="-1.57 1.57" damping="0.01"/>
+          <geom class="visual" mesh="42_Link" rgba="0.498 0.498 0.498 1"/>
+          <site name="tip_42" pos="0.04 0 0" size="0.002" rgba="1 0 0 0"/>
+          <geom name="foot_4" class="collision" type="sphere" size="0.008" pos="0.04 0 0" rgba="0 0 0 0"/>
+        </body>
+      </body>
+          <body name="44_Link" pos="-0.050294 0.0280082 -0.0113298" quat="-0.268356 -0.345082 -0.635904 0.636026">
+            <inertial pos="0.0088686 0 0.00363643" quat="0 0.642401 0 0.766368" mass="0.0018" diaginertia="2.00026e-07 1.76485e-07 2.83223e-08"/>
+            <joint name="44_joint" axis="0.177153 0 -0.984183" range="-1.57 1.57"/>
+            <geom class="visual" mesh="44_Link" rgba="0.498 0.498 0.498 1"/>
+            <body name="43_Link" pos="0.0254018 0 0" quat="0.766701 -0.0567673 -0.068453 0.635816">
+              <inertial pos="0.022736 0.00128943 0.00199959" quat="0.017512 0.706242 -0.0190334 0.707498" mass="0.0011" diaginertia="2.21906e-07 2.13130e-07 1.17027e-08"/>
+              <joint name="43_joint" axis="0 0 1" range="-1.57 1.57" damping="0.01"/>
+              <geom class="visual" mesh="43_Link" rgba="0.498 0.498 0.498 1"/>
+              <site name="tip_43" pos="0.04 0 0" size="0.002" rgba="0 1 0 0"/>
+          </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <!-- 五连杆闭环约束 -->
+  <equality>
+      <connect name="loop_leg1" site1="tip_12" site2="tip_13" solref="0.005 1"/>
+      <connect name="loop_leg2" site1="tip_22" site2="tip_23" solref="0.005 1"/>
+      <connect name="loop_leg3" site1="tip_32" site2="tip_33" solref="0.005 1"/>
+      <connect name="loop_leg4" site1="tip_42" site2="tip_43" solref="0.005 1"/>
+  </equality>
+
+  <!-- 排除内部碰撞 -->
+  <contact>
+      <exclude body1="12_Link" body2="13_Link"/>
+      <exclude body1="22_Link" body2="23_Link"/>
+      <exclude body1="32_Link" body2="33_Link"/>
+      <exclude body1="42_Link" body2="43_Link"/>
+  </contact>
+
+  <!-- 执行器 (只控制主动关节) -->
+  <actuator>
+    <motor name="servo_11" joint="11_joint" gear="1" ctrlrange="-1.0 1.0"/>
+    <motor name="servo_14" joint="14_joint" gear="1" ctrlrange="-1.0 1.0"/>
+
+    <motor name="servo_21" joint="21_joint" gear="1" ctrlrange="-1.0 1.0"/>
+    <motor name="servo_24" joint="24_joint" gear="1" ctrlrange="-1.0 1.0"/>
+
+    <motor name="servo_31" joint="31_joint" gear="1" ctrlrange="-1.0 1.0"/>
+    <motor name="servo_34" joint="34_joint" gear="1" ctrlrange="-1.0 1.0"/>
+
+    <motor name="servo_41" joint="41_joint" gear="1" ctrlrange="-1.0 1.0"/>
+    <motor name="servo_44" joint="44_joint" gear="1" ctrlrange="-1.0 1.0"/>
+  </actuator>
+
+  <!-- 传感器 -->
+  <sensor>
+    <!-- IMU传感器 -->
+    <accelerometer name="linear-acceleration" site="imu_site"/>
+    <gyro name="angular-velocity" site="imu_site"/>
+    <framequat name="attitude" objtype="site" objname="imu_site"/>
+    <magnetometer name="magnetometer" site="imu_site"/>
+
+    <!-- 足端力传感器 -->
+    <touch name="fl_touch" site="tip_12"/>
+    <touch name="fr_touch" site="tip_22"/>
+    <touch name="hl_touch" site="tip_32"/>
+    <touch name="hr_touch" site="tip_42"/>
+  </sensor>
+
+  <!-- 关键帧 -->
+  <keyframe>
+    <key name="stand" qpos="
+      0 0 0.15  1 0 0 0
+      0.5 -0.5
+      0.5 -0.5
+      0.5 -0.5
+      0.5 -0.5
+      0.5 -0.5
+      0.5 -0.5
+      0.5 -0.5
+      0.5 -0.5
+    "/>
+    <key name="home" qpos="
+      0 0 0.15  1 0 0 0
+      0 0
+      0 0
+      0 0
+      0 0
+      0 0
+      0 0
+      0 0
+      0 0
+    "/>
+  </keyframe>
+</mujoco>
