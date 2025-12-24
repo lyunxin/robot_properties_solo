@@ -1,0 +1,52 @@
+# Q8bot Test Configuration
+# Simple standing controller for q8bot five-bar linkage robot
+
+control:
+  type: joint_spline
+  dt: 0.001
+
+poses:
+  home: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  stand: [0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5]
+
+on_start:
+  durations: [2.0]  # 移动所需时间（秒）
+  poses: ["stand"]  # 目标姿态名称
+
+joint_spline:
+  # Simple standing pose test
+  waypoints:
+    - time: 0.0
+      positions: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    - time: 3.0
+      positions: [0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5]
+    - time: 6.0
+      positions: [0.3, -0.3, 0.3, -0.3, 0.3, -0.3, 0.3, -0.3]
+    - time: 9.0
+      positions: [0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5]
+
+joint_controller:
+  # PD 增益 (8个主动关节)
+  Kp: [10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0]
+  Kd: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+  # 摩擦补偿参数 (如果不确定，先设为 0)
+  B: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]        # 粘性摩擦系数
+  Fv: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]       # 静摩擦力
+  sigma: 0.1                                         # 摩擦模型拟合参数
+
+  # 安全限制
+  max_control: 2.0
+
+loop:
+  - poses: ["home", "stand"]
+    durations: [2.0, 4.0]       # 每个动作到达所需的时间
+  - poses: ["stand", "home"]
+    durations: [2.0, 4.0]
+
+mujoco:
+  use_gui: true
+  start_paused: false
+  fixed: false
+  environment: ""
+  environments_package: ""
